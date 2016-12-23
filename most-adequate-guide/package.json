@@ -1,0 +1,19 @@
+{
+  "name": "most-adequate-guide",
+  "version": "1.0.0",
+  "description": "exercises from fp book",
+  "main": "index.html",
+  "scripts": {
+    "test": "mocha "
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "accounting": "^0.4.1",
+    "chai": "^3.5.0",
+    "ramda": "^0.22.1"
+  },
+  "devDependencies": {
+    "mocha": "^3.2.0"
+  }
+}
