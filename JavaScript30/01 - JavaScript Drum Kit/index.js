@@ -18,6 +18,16 @@ function app() {
     return key;
   };
 
+  function getAudio(keyCode) {
+    return document.querySelector(`audio[data-key="${keyCode}"]`);
+  }
+
+  function playSound(audioEl) {
+    if(audioEl) {
+
+    }
+  }
+
   function addKeydownListener(el) {
   
     el.addEventListener(KEYDOWN_EVENT, function(e) {
@@ -25,13 +35,17 @@ function app() {
       const queryStr = `div[data-key="${keycode}"]`;
       const key = document.querySelector(queryStr);
       addPlayingClass(key);
+      playSound(getAudio(keycode));
     });
   };
 
   function addClickListeners(els) {
 
     function addClickListener(key) {
-      key.addEventListener(CLICK_EVENT, () => addPlayingClass(key));
+      key.addEventListener(CLICK_EVENT, function() {
+        addPlayingClass(key);
+        //const audio = getAudio()
+      });
     }
 
     const keys = Util.convertToArray(els)
