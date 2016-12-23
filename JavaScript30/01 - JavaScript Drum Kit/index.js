@@ -1,22 +1,54 @@
-
-const CLICK_EVENT = 'click';
-
-var addPlayingClass = function(key) {
-  const className = key.className;
-
-  key.className = `${className} playing`;
+const Util = {
+  convertToArray(arrLike) {
+    return Array.prototype.slice.call(arrLike);
+  }
 };
 
-var addClickListener = function(key) {
-  key.addEventListener(CLICK_EVENT, () => addPlayingClass(key));
+function app() {
+  const CLICK_EVENT = 'click';
+  const KEYDOWN_EVENT = 'keydown';
+
+  function addPlayingClass(key) {
+    if(key) {
+      const className = key.className;
+
+      key.className = `${className} playing`;
+    }
+
+    return key;
+  };
+
+  function addKeydownListener() {
+  
+    window.addEventListener(KEYDOWN_EVENT, function(e) {
+      const keycode = e.keyCode;
+      const queryStr = `div[data-key="${keycode}"]`;
+      const key = document.querySelector(queryStr);
+      addPlayingClass(key);
+    });
+  };
+
+  function addClickListeners() {
+
+    function addClickListener(key) {
+      key.addEventListener(CLICK_EVENT, () => addPlayingClass(key));
+    }
+
+    const keys = Util.convertToArray(document.getElementsByClassName('key'));
+    keys.forEach(addClickListener);
+  }
+
+  function start() {
+    addClickListeners();
+    addKeydownListener();
+  }
+
+  return {
+    start
+  };
+
 }
 
-function convertToArray(arrLike) {
-  return Array.prototype.slice.call(arrLike);
-}
-function run() {
-  const keys = convertToArray(document.getElementsByClassName('key'));
-  keys.forEach(addClickListener);
-}
+const App = app();
 
-run();
+App.start();
