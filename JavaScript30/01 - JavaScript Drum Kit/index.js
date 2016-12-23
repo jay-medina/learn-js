@@ -18,9 +18,9 @@ function app() {
     return key;
   };
 
-  function addKeydownListener() {
+  function addKeydownListener(el) {
   
-    window.addEventListener(KEYDOWN_EVENT, function(e) {
+    el.addEventListener(KEYDOWN_EVENT, function(e) {
       const keycode = e.keyCode;
       const queryStr = `div[data-key="${keycode}"]`;
       const key = document.querySelector(queryStr);
@@ -28,19 +28,19 @@ function app() {
     });
   };
 
-  function addClickListeners() {
+  function addClickListeners(els) {
 
     function addClickListener(key) {
       key.addEventListener(CLICK_EVENT, () => addPlayingClass(key));
     }
 
-    const keys = Util.convertToArray(document.getElementsByClassName('key'));
-    keys.forEach(addClickListener);
+    const keys = Util.convertToArray(els)
+    keys.forEach(addClickListener)
   }
 
   function start() {
-    addClickListeners();
-    addKeydownListener();
+    addClickListeners(document.getElementsByClassName('key'));
+    addKeydownListener(window);
   }
 
   return {
