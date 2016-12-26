@@ -2,6 +2,7 @@
 function app() {
   const CLICK_EVENT = 'click';
   const KEYDOWN_EVENT = 'keydown';
+  const TRANSITION_END_EVENT = 'transitionend';
 
   function addPlayingClass(key) {
     if(key) {
@@ -31,8 +32,12 @@ function app() {
     playSound(getAudio(keyCode));
   }
 
-  function addTransitionEndListener(els) {
-
+  function addTransitionEndListeners(keys) {
+    keys.forEach(function(key) {
+      key.addEventListener(TRANSITION_END_EVENT, function() {
+        key.classList.remove('playing');
+      });
+    });
   } 
 
   function addKeydownListener(el) {
@@ -56,8 +61,10 @@ function app() {
   }
 
   function start() {
-    addClickListeners(document.querySelectorAll('.key'));
+    const keys = document.querySelectorAll('.key')
+    addClickListeners(keys);
     addKeydownListener(window);
+    addTransitionEndListeners(keys);
   }
 
   return {
