@@ -15,7 +15,58 @@
     </ul>
   </form>
 <script>
-const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+function fetchCities() {
+  const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+  return fetch(endpoint).then(response => response.json());
+}
+
+function filterListOfCities(cities, searchText) {
+  searchText = searchText.toLowerCase();
+
+  return cities.filter(function(c) {
+    const cityLower = c.city.toLowerCase();
+    const stateLower = c.state.toLowerCase();
+    const together = cityLower + ', ' + stateLower;
+    return cityLower.includes(searchText) || 
+           stateLower.includes(searchText) ||
+           together.includes(searchText);
+  });
+}
+
+let cities = [];
+
+fetchCities().then(function(c) {
+  cities = c;
+});
+
+//-------------------------------------
+function createListItem(city) {
+  const li = document.createElement('li');
+  li.innerHTML = `<span>${city.city}, ${city.state}</span><span>${city.population}</span>`;
+
+  return li;
+}
+
+function updateSuggestions(suggestions, cityList) {
+  suggestions.innerHTML = '';
+
+  cityList.forEach(city => {
+    const li = createListItem(city);
+    suggestions.append(li);
+  });
+}
+
+const search = document.querySelector('.search');
+const suggestions = document.querySelector('.suggestions');
+
+search.addEventListener('keyup',function() {
+  const searchText = search.value;
+  const cityList = filterListOfCities(cities, searchText);
+  updateSuggestions(suggestions, cityList);
+});
+
+
+
 
 </script>
   </body>
