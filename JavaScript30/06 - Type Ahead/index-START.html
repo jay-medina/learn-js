@@ -27,33 +27,28 @@ function filterListOfCities(cities, searchText) {
     const cityLower = c.city.toLowerCase();
     const stateLower = c.state.toLowerCase();
     const together = cityLower + ', ' + stateLower;
-    return cityLower.includes(searchText) || 
-           stateLower.includes(searchText) ||
-           together.includes(searchText);
+    return together.includes(searchText);
   });
 }
 
-let cities = [];
+const cities = [];
 
-fetchCities().then(function(c) {
-  cities = c;
-});
+fetchCities().then(c => cities.push(...c));
 
-//-------------------------------------
-function createListItem(city) {
-  const li = document.createElement('li');
-  li.innerHTML = `<span>${city.city}, ${city.state}</span><span>${city.population}</span>`;
-
-  return li;
+function createListItem(c, searchText) {
+  const regex = new RegExp(searchText, 'gi');
+  const together = c.city + ', ' + c.state;
+  return `<li>
+            <span>${together.replace(regex, '<span class="hl">$&</span>')}</span>
+            <span>${c.population}</span>
+          </li>`;
 }
 
-function updateSuggestions(suggestions, cityList) {
+function updateSuggestions(searchText, suggestions, cityList) {
   suggestions.innerHTML = '';
 
-  cityList.forEach(city => {
-    const li = createListItem(city);
-    suggestions.append(li);
-  });
+  html = cityList.map((c) => createListItem(c, searchText)).join('');
+  suggestions.innerHTML = html;
 }
 
 const search = document.querySelector('.search');
@@ -62,7 +57,7 @@ const suggestions = document.querySelector('.suggestions');
 search.addEventListener('keyup',function() {
   const searchText = search.value;
   const cityList = filterListOfCities(cities, searchText);
-  updateSuggestions(suggestions, cityList);
+  updateSuggestions(searchText, suggestions, cityList);
 });
 
 
