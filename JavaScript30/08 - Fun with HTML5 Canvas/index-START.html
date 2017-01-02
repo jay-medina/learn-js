@@ -7,6 +7,76 @@
 <body>
 <canvas id="draw" width="800" height="800"></canvas>
 <script>
+  const canvas = document.querySelector('#draw');
+  const context = canvas.getContext('2d');
+  const state = {
+    isDrawing: false,
+    lastX: 0,
+    lastY: 0,
+    hue: 0,
+    lineWidth: 1,
+    grow: true,
+    updatePositions(offsetX, offsetY) {
+      this.lastX = offsetX;
+      this.lastY = offsetY;
+    },
+    updateHue() {
+      if(this.hue >= 360) {
+        this.hue = 0;
+      }
+      this.hue += 1;
+    },
+    update(property, limitHigh, limitLow) {
+      if(this[property] >= limitHigh) {
+        this.grow = false;
+      }
+      else if(this[property] <= 1) {
+        this.grow = true;
+      }
+
+      if(this.grow) {
+        this[property] += 1;
+      }
+      else {
+        this[property] -= 1;
+      }
+    }
+  };
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  context.strokeStyle = '#BADA55';
+  context.lineJoin = 'round';
+  context.lineCap = 'round';
+  context.lineWidth = 1;
+
+  function draw(e) {
+    if(!state.isDrawing) return;
+    context.strokeStyle = `hsl(${state.hue}, 100%, 50%)`;
+    context.lineWidth = state.lineWidth;
+    context.beginPath();
+    context.moveTo(state.lastX, state.lastY);
+    context.lineTo(e.offsetX, e.offsetY);
+    context.stroke();
+    state.updatePositions(e.offsetX, e.offsetY);
+    state.updateHue();
+    state.update('lineWidth', 80, 0);
+  }
+
+  function startDrawing(e) {
+    state.isDrawing = true;
+    state.updatePositions(e.offsetX, e.offsetY);
+  }
+
+  function stopDrawing(e) {
+    state.isDrawing = false;
+  }
+
+  canvas.addEventListener('mousemove', draw);
+  canvas.addEventListener('mousedown', startDrawing);
+  canvas.addEventListener('mouseup', stopDrawing);
+  canvas.addEventListener('mouseout', stopDrawing);
+
 </script>
 
 <style>
