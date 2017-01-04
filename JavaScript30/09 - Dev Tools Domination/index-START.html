@@ -18,28 +18,52 @@
     }
 
     // Regular
+    console.log('hello world');
 
     // Interpolated
+    console.log('hello %s', 'baby');
 
     // Styled
-
+    console.log('%c i am some gret text', 'background: #aaa; font-size: 12px');
+    
     // warning!
+    console.warn('ohhh nooo!');
 
     // Error :|
+    console.error('shit!');
 
     // Info
-
+    console.info('fun fact!');
+    
     // Testing
+    console.assert(1 === 1, 'nope');
 
     // clearing
+    //console.clear();
 
     // Viewing DOM Elements
+    console.log(document.querySelector('p'));
+    console.dir(document.querySelector('p'));
 
     // Grouping together
+    dogs.forEach(dog => {
+      console.group(dog.name);
+      console.log(`This is ${dog.name}`);
+      console.log(`${dog.name} is ${dog.age} yrs old`);
+      console.log(`${dog.name} is ${dog.age * 7} dog yrs old`);
+      console.groupEnd();
+    });
 
     // counting
+    console.count('Jose');
 
     // timing
+    console.time('fetch data');
+    setTimeout(function(){
+      for(var i = 0; i <= 10; i ++) { console.count('meow');}
+      console.timeEnd('fetch data');
+
+    }, 500);
 
   </script>
 </body>
