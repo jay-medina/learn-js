@@ -104,6 +104,30 @@
   </div>
 
 <script>
+  const items = document.querySelectorAll('.item');
+  const shiftKeyPressed = false;
+
+  function onChange(e) {
+    alert('hi');
+  }
+
+  document.addEventListener('keydown', function(e){
+    if(e.shiftKey) {
+      shiftKeyPressed = true;
+    }
+  })
+
+  document.addEventListener('keyup', function(e) {
+    if(e.shiftKey) {
+      shiftKeyPressed = false;
+    }
+  })
+
+  items.forEach((item) => {
+    item.addEventListener('change',onChange);
+ 
+  });
+
 </script>
 </body>
 </html>
