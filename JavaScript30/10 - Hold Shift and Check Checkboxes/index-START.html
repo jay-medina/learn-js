@@ -104,6 +104,83 @@
   </div>
 
 <script>
+  const items = [...document.querySelectorAll('.item')];
+  let shiftKeyPressed = false;
+
+  function isItemChecked(item) {
+    const checkbox = item.querySelector('input');
+    return checkbox.checked;
+  }
+
+  function getClosestClicked(itemJustChanged) {
+    let closestItemIndex = -1;
+    let closestDifference = items.length;
+
+    const itemIndex = items.findIndex(i => i === itemJustChanged);
+    
+    items.forEach(function(item, index) {
+      if(!isItemChecked(item)) {
+        return;
+      }
+
+      const diff = Math.abs(itemIndex - index);
+      if(item !== itemJustChanged && diff < closestDifference) {
+        closestItemIndex = index;
+        closestDifference = diff;
+      } 
+    });
+
+    return items[closestItemIndex];
+  }
+
+  function checkItem(item) {
+    const checkbox = item.querySelector('input');
+    checkbox.click();
+  }
+
+  function selectItemsInbetween(itemClicked, closestItem) {
+    const indexOfItem = items.findIndex(i => i === itemClicked);
+    const indexOfClosest = items.findIndex(i => i === closestItem);
+    let [big, small] = [indexOfItem, indexOfClosest];
+
+    if(indexOfItem < indexOfClosest) {
+      [big, small] = [indexOfClosest, indexOfItem];
+    }
+
+    items.forEach(function(item, index) {
+      if(index > small && index < big) {
+        checkItem(item);
+      }
+    });
+    
+  }
+
+  function onChange(e, item) {
+    if(shiftKeyPressed) {
+      const closestItem = getClosestClicked(item);
+      if(closestItem) {
+        selectItemsInbetween(item, closestItem);
+      }
+    }
+  }
+
+  document.addEventListener('keydown', function(e){
+    if(e.keyCode === 16) {
+      shiftKeyPressed = true;
+    }
+  })
+
+  document.addEventListener('keyup', function(e) {
+    if(e.keyCode === 16) {
+      shiftKeyPressed = false;
+    }
+  })
+
+  items.forEach((item) => {
+    item.addEventListener('change', (e) => onChange(e, item));
+ 
+  });
+
 </script>
 </body>
 </html>
