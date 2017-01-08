@@ -6,18 +6,37 @@ const volume = player.querySelector('input[name="volume"]');
 const playbackRate = player.querySelector('input[name="playbackRate"]');
 const skipBack = player.querySelector('button[data-skip="-10"]');
 const skipForward = player.querySelector('button[data-skip="25"]');
+const progress = player.querySelector('.progress');
+const progressFilled = player.querySelector('.progress__filled');
 
 video.volume = volume.value;
 video.playbackRate = playbackRate.value;
 
-playButton.addEventListener('click', function() {
+function togglePlay() {
   if(video.paused) {
     video.play();
   }
   else {
     video.pause();
   }
-});
+}
+
+function updateButton() {
+  const PAUSE = '❚ ❚';
+  const PLAY = '►';
+  
+  if(video.paused) {
+    playButton.textContent = PLAY;
+  }
+  else {
+    playButton.textContent = PAUSE;
+  }
+}
+
+playButton.addEventListener('click', togglePlay);
+video.addEventListener('click', togglePlay);
+video.addEventListener('play', updateButton);
+video.addEventListener('pause', updateButton);
 
 volume.addEventListener('change', function(e) {
   video.volume = volume.value;
