@@ -41,6 +41,13 @@ function updateProgress() {
   progressBar.style.flexBasis = `${percent}%`;
 }
 
+function progressbarClick(e) {
+  const width = progress.offsetWidth;
+  const posX = e.offsetX;
+  const percent = (posX / width);
+  video.currentTime = video.duration * percent;
+}
+
 playButton.addEventListener('click', togglePlay);
 video.addEventListener('click', togglePlay);
 video.addEventListener('play', updateButton);
@@ -50,6 +57,6 @@ playSliders.forEach(slider => slider.addEventListener('click', () => updateSlide
 
 skipButtons.forEach(button => button.addEventListener('click', () => skipPlayback(button)));
 
-progressBar.addEventListener('click', updateProgress);
+progress.addEventListener('click', progressbarClick);
 
 video.addEventListener('timeupdate', updateProgress);
