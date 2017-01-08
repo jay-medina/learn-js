@@ -5,7 +5,7 @@ const playButton = player.querySelector('.player__button');
 const playSliders = player.querySelectorAll('.player__slider');
 const skipButtons = player.querySelectorAll('button[data-skip]');
 const progress = player.querySelector('.progress');
-const progressFilled = player.querySelector('.progress__filled');
+const progressBar = player.querySelector('.progress__filled');
 
 function togglePlay() {
   if(video.paused) {
@@ -36,6 +36,11 @@ function updateSlider(slider) {
   video[slider.name] = slider.value;
 }
 
+function updateProgress() {
+  const percent = (video.currentTime / video.duration) * 100;
+  progressBar.style.flexBasis = `${percent}%`;
+}
+
 playButton.addEventListener('click', togglePlay);
 video.addEventListener('click', togglePlay);
 video.addEventListener('play', updateButton);
@@ -45,3 +50,6 @@ playSliders.forEach(slider => slider.addEventListener('click', () => updateSlide
 
 skipButtons.forEach(button => button.addEventListener('click', () => skipPlayback(button)));
 
+progressBar.addEventListener('click', updateProgress);
+
+video.addEventListener('timeupdate', updateProgress);
