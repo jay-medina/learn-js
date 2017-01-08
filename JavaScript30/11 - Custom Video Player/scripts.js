@@ -29,7 +29,7 @@ function updateButton() {
 }
 
 function skipPlayback(button) {
-  video.currentTime += Number(button.dataset['skip']);
+  video.currentTime += Number(button.dataset.skip);
 }
 
 function updateSlider(slider) {
