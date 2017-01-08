@@ -4,8 +4,7 @@ const video = player.querySelector('.player__video');
 const playButton = player.querySelector('.player__button');
 const volume = player.querySelector('input[name="volume"]');
 const playbackRate = player.querySelector('input[name="playbackRate"]');
-const skipBack = player.querySelector('button[data-skip="-10"]');
-const skipForward = player.querySelector('button[data-skip="25"]');
+const skipButtons = player.querySelectorAll('button[data-skip]');
 const progress = player.querySelector('.progress');
 const progressFilled = player.querySelector('.progress__filled');
 
@@ -33,6 +32,10 @@ function updateButton() {
   }
 }
 
+function skipPlayback(e, button) {
+  video.currentTime += Number(button.dataset['skip']);
+}
+
 playButton.addEventListener('click', togglePlay);
 video.addEventListener('click', togglePlay);
 video.addEventListener('play', updateButton);
@@ -46,12 +49,5 @@ playbackRate.addEventListener('change', function() {
   video.playbackRate = playbackRate.value;
 });
 
-
-skipBack.addEventListener('click', function() {
-  video.currentTime -= 10;
-});
-
-skipForward.addEventListener('click', function() {
-  video.currentTime += 25;
-});
+skipButtons.forEach(button => button.addEventListener('click', (e) => skipPlayback(e, button)));
 
