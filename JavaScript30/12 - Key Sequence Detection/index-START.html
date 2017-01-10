@@ -7,6 +7,17 @@
 </head>
 <body>
 <script>
+const pressed = [];
+const secretcode = 'unicorn';
+  window.addEventListener('keyup', function(e) {
+    pressed.push(e.key);
+    if(pressed.length > secretcode.length) {
+      pressed.splice(0, 1);
+    }
+    if(pressed.join('') === secretcode) {
+      cornify_add();
+    }
+  });
 </script>
 </body>
 </html>
