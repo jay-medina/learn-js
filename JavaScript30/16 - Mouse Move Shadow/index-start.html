@@ -31,6 +31,22 @@
   </style>
 
 <script>
+ const hero = document.querySelector('.hero');
+ const text = hero.querySelector('h1');
+
+ hero.addEventListener('mousemove', function(e) {
+   const {offsetWidth: width, offsetHeight: height} = hero;
+   let x = e.offsetX;
+   let y = e.offsetY;
+
+   if(hero !== e.target) {
+     x = x + e.target.offsetLeft;
+     y = y + e.target.offsetTop;
+   }
+
+   
+ });
+
 </script>
 </body>
 </html>

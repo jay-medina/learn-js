@@ -44,8 +44,19 @@
 
 <script>
 const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
+const $bands = document.querySelector('#bands');
 
+function strip(bandName) {
+  return bandName.replace(/^(the |an |a )/i,'').trim();
+}
+bands.sort(function(a, b) {
+  const _a = strip(a);
+  const _b = strip(b);
+  return (_a > _b)? 1 : -1;
+});
+console.log(strip('A Skylit Drive'));
 
+$bands.innerHTML = bands.map(bn => `<li>${bn}</li>`).join('')
 </script>
 
 </body>
