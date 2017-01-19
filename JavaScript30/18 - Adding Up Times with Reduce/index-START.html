@@ -182,6 +182,18 @@
     </li>
 
 <script>
+  function createTimeObj(str) {
+    const [minutes, seconds] = str.split(':');
+
+    return {
+      minutes, seconds
+    };
+  }
+
+  const li = [...document.querySelectorAll('li')];
+  const times = li.map(el => createTimeObj(el.dataset.time));
+
+  console.log(times);
 </script>
 </body>
 </html>
