@@ -183,7 +183,7 @@
 
 <script>
   function createTimeObj(str) {
-    const [minutes, seconds] = str.split(':');
+    const [minutes, seconds] = str.split(':').map(Number);
 
     return {
       minutes, seconds
@@ -193,12 +193,18 @@
   const li = [...document.querySelectorAll('li')];
   const times = li.map(el => createTimeObj(el.dataset.time));
 
-  const totalSeconds = times.reduce((total, {seconds})=> total + Number(seconds), 0);
-  const totalMinutes = times.reduce((total, {minutes}) => total + Number(minutes), 0);
-  const [extraMinutes, seconds] = [Math.floor(totalSeconds / 60), totalSeconds % 60];
+  let totalSeconds = times.reduce((total, {seconds})=> total + seconds, 0);
+  let totalMinutes = times.reduce((total, {minutes}) => total + minutes, 0);
+  let extraMinutes, totalHrs;
+  
+  [extraMinutes, totalSeconds] = [Math.floor(totalSeconds / 60), totalSeconds % 60];
+  
+  totalMinutes = totalMinutes + extraMinutes;
+  [totalHrs, totalMinutes] = [Math.floor(totalMinutes / 60), totalMinutes % 60];
 
-  console.log('Minutes:', totalMinutes + extraMinutes);
-  console.log('Seconds:', seconds);
+  console.log('Hours:', totalHrs);
+  console.log('Minutes:', totalMinutes);
+  console.log('Seconds:', totalSeconds);
   
 </script>
 </body>
