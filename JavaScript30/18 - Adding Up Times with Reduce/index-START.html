@@ -193,7 +193,13 @@
   const li = [...document.querySelectorAll('li')];
   const times = li.map(el => createTimeObj(el.dataset.time));
 
-  console.log(times);
+  const totalSeconds = times.reduce((total, {seconds})=> total + Number(seconds), 0);
+  const totalMinutes = times.reduce((total, {minutes}) => total + Number(minutes), 0);
+  const [extraMinutes, seconds] = [Math.floor(totalSeconds / 60), totalSeconds % 60];
+
+  console.log('Minutes:', totalMinutes + extraMinutes);
+  console.log('Seconds:', seconds);
+  
 </script>
 </body>
 </html>
