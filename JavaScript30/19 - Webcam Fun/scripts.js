@@ -3,6 +3,8 @@ const canvas = document.querySelector('.photo');
 const ctx = canvas.getContext('2d');
 const strip = document.querySelector('.strip');
 const snap = document.querySelector('.snap');
+const controls = document.querySelector('.controls');
+
 
 function getVideo() {
   navigator.mediaDevices.getUserMedia({
@@ -31,9 +33,17 @@ function paintToCanvas() {
 function takePhoto() {
   snap.currentTime = 0;
   snap.play();
+
+  const data = canvas.toDataURL('image/jpeg');
+  const link = document.createElement('a');
+  link.href = data;
+  link.setAttribute('download', 'jose');
+  link.innerHTML = `<img src="${data}" alt="handsome man" />`
+  strip.insertBefore(link, strip.firstChild);
+  console.log(data);
 }
 
+controls.addEventListener('click', takePhoto);
 getVideo();
 
-const controls = document.querySelector('.controls');
-const takePhotoBtn = controls.addEventListener('click', takePhoto);
+video.addEventListener('canplay', paintToCanvas);
