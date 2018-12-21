@@ -1,7 +1,19 @@
-import { addTwoNumbers } from './problems';
+import { loopingTriangle, fizzbuzz, chessBoard } from './problems';
 
-describe('addTwoNumbers', () => {
-  it('adds the two numbers', () => {
-    expect(addTwoNumbers(4, 10)).toBe(14);
+describe('loopingTriangle', () => {
+  it('prints out the triangle based on the length', () => {
+    expect(loopingTriangle(7)).toMatchSnapshot();
+  });
+});
+
+describe('fizzbuzz', () => {
+  it('does fizzbuzz', () => {
+    expect(fizzbuzz(100)).toMatchSnapshot();
+  });
+});
+
+describe('chessboard', () => {
+  it('prints out the chessboard', () => {
+    expect(chessBoard(8)).toMatchSnapshot();
   });
 });
