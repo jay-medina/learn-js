@@ -1,4 +1,4 @@
-import { range, sum, reverseArray, prepend, arrayToList, listToArray, nth } from './problems';
+import { range, sum, reverseArray, prepend, arrayToList, listToArray, nth, deepEqual } from './problems';
 
 describe('range', () => {
   it('returns the range from start to end', () => {
@@ -87,5 +87,24 @@ describe('nth', () => {
 
     expect(nth(li, 10)).toBeUndefined();
     expect(nth(li, -10)).toBeUndefined();
+  });
+});
+
+describe('deepEqual', () => {
+  it('comparing same object', () => {
+    const obj = {here: {is: 'an'}, object: 2};
+
+    expect(deepEqual(obj, obj)).toBe(true);
+  });
+  it('comparing diff object', () => {
+    const obj = {here: {is: 'an'}, object: 2};
+    const obj2 = {here: 1, object: 2};
+
+    expect(deepEqual(obj, obj2)).toBe(false);
+  });
+  it('comparing same object', () => {
+    const obj = {here: {is: 'an'}, object: 2};
+    const obj2 = {here: {is: 'an'}, object: 2};
+    expect(deepEqual(obj, obj2)).toBe(true);
   });
 });
