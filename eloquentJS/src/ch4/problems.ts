@@ -78,6 +78,19 @@ export function prepend<T>(element: T, li: List<T>): List<T> {
   };
 }
 
-// export function nth<T>(li: List<T>, index: number): T | undefined {
+export function nth<T>(li: List<T>, index: number): T | undefined {
+  if(!li) return undefined;
+  if(index < 0) return undefined;
+  
+  let ct = 0;
+  let pointer: List<T> = li;
 
-// }
+  while(ct <= index && pointer != null) {
+    if(ct === index) return pointer.value;
+
+    ct += 1;
+    pointer = pointer.rest;
+  }
+
+  return undefined;
+}

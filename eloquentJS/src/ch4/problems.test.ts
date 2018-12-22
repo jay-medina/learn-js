@@ -1,4 +1,4 @@
-import { range, sum, reverseArray, prepend, arrayToList, listToArray } from './problems';
+import { range, sum, reverseArray, prepend, arrayToList, listToArray, nth } from './problems';
 
 describe('range', () => {
   it('returns the range from start to end', () => {
@@ -75,17 +75,17 @@ describe('prepend', () => {
   });
 });
 
-// xdescribe('nth', () => {
-//   it('returns the nth element', () => {
-//     const li = arrayToList([1, 2, 3, 4]);
+describe('nth', () => {
+  it('returns the nth element', () => {
+    const li = arrayToList([1, 2, 3, 4]);
 
-//     expect(nth(li, 1)).toBe(2);
-//   });
+    expect(nth(li, 1)).toBe(2);
+  });
 
-//   it('returns undefined', () => {
-//     const li = arrayToList([1, 2, 3, 4]);
+  it('returns undefined', () => {
+    const li = arrayToList([1, 2, 3, 4]);
 
-//     expect(nth(li, 10)).toBeUndefined();
-//     expect(nth(li, -10)).toBeUndefined();
-//   });
-// });
+    expect(nth(li, 10)).toBeUndefined();
+    expect(nth(li, -10)).toBeUndefined();
+  });
+});
