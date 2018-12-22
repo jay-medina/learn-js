@@ -18,6 +18,13 @@
     "ts-jest": "^23.10.5"
   },
   "jest": {
+    "globals": {
+      "ts-jest": {
+        "diagnostics": {
+          "warnOnly": true
+        }
+      }
+    },
     "preset": "ts-jest"
   }
 }
