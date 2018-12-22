@@ -1,4 +1,4 @@
-import { range, sum, reverseArray } from './problems';
+import { range, sum, reverseArray, prepend, arrayToList, listToArray } from './problems';
 
 describe('range', () => {
   it('returns the range from start to end', () => {
@@ -32,7 +32,7 @@ describe('sum', () => {
   });
 });
 
-describe('reversArray', () => {
+describe('reverseArray', () => {
   it('returns the array of letters in reverse order', () => {
     expect(reverseArray(['A', 'B', 'C'])).toEqual(['C', 'B', 'A']);
   });
@@ -41,3 +41,51 @@ describe('reversArray', () => {
     expect(reverseArray([1, 2, 3, 4, 5])).toEqual([5, 4, 3, 2, 1]);
   });
 });
+
+describe('arrayToList', () => {
+  it('converts an array of numbers to a linked list', () => {
+    expect(arrayToList([1, 2, 3, 4])).toMatchSnapshot();
+  });
+
+  it('converts an empty array to null', () => {
+    expect(arrayToList([])).toBe(null);
+  });
+});
+
+describe('listToArray', () => {
+  it('converts a list to an array of numbers', () => {
+    const original = [1, 2, 3, 4];
+    const li = arrayToList(original);
+
+    expect(listToArray(li)).toEqual(original);
+  });
+});
+
+describe('prepend', () => {
+  it('prepends the new element onto an empty list', () => {
+    const li = null;
+
+    expect(prepend(10, li)).toMatchSnapshot();
+  });
+
+  it('prepends the new element onto the list', () => {
+    const li = arrayToList([1, 2, 3, 4]);
+
+    expect(prepend(10, li)).toMatchSnapshot();
+  });
+});
+
+// xdescribe('nth', () => {
+//   it('returns the nth element', () => {
+//     const li = arrayToList([1, 2, 3, 4]);
+
+//     expect(nth(li, 1)).toBe(2);
+//   });
+
+//   it('returns undefined', () => {
+//     const li = arrayToList([1, 2, 3, 4]);
+
+//     expect(nth(li, 10)).toBeUndefined();
+//     expect(nth(li, -10)).toBeUndefined();
+//   });
+// });

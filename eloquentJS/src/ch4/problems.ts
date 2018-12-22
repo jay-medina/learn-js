@@ -28,11 +28,56 @@ export function sum(n: number[]): number {
 }
 
 export function reverseArray<T>(arr: T[]): T[] {
-  let reversed: T[] = [];
+  let reversed: T[] = Array(arr.length);
 
   for (let i = arr.length - 1; i >= 0; i -= 1) {
-    reversed.push(arr[i]);
+    reversed[arr.length - i - 1] = arr[i];
   }
 
   return reversed;
 }
+
+interface Node<T> {
+  value: T;
+  rest: Node<T> | null;
+}
+
+type List<T> = Node<T> | null;
+
+export function arrayToList<T>(arr: T[]): List<T> {
+  if (arr.length === 0) return null;
+
+  let li = null;
+  let arrReversed = reverseArray(arr);
+
+  for (let a of arrReversed) {
+    li = prepend(a, li);
+  }
+
+  return li;
+}
+
+export function listToArray<T>(list: List<T>): T[] {
+  if (!list) return [];
+
+  let arr: T[] = [];
+  let pointer: List<T> = list;
+
+  while(pointer != null) {
+    arr.push(pointer.value);
+    pointer = pointer.rest;
+  }
+
+  return arr;
+}
+
+export function prepend<T>(element: T, li: List<T>): List<T> {
+  return {
+    value: element,
+    rest: li,
+  };
+}
+
+// export function nth<T>(li: List<T>, index: number): T | undefined {
+
+// }
