@@ -1,4 +1,4 @@
-import { range, sum } from './problems';
+import { range, sum, reverseArray } from './problems';
 
 describe('range', () => {
   it('returns the range from start to end', () => {
@@ -29,5 +29,15 @@ describe('range', () => {
 describe('sum', () => {
   it('returns the sum of array of numbers', () => {
     expect(sum(range(1, 10))).toBe(55);
+  });
+});
+
+describe('reversArray', () => {
+  it('returns the array of letters in reverse order', () => {
+    expect(reverseArray(['A', 'B', 'C'])).toEqual(['C', 'B', 'A']);
+  });
+
+  it('returns the array of numbers in reverse order', () => {
+    expect(reverseArray([1, 2, 3, 4, 5])).toEqual([5, 4, 3, 2, 1]);
   });
 });

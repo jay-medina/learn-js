@@ -26,3 +26,13 @@ export function sum(n: number[]): number {
 
   return s;
 }
+
+export function reverseArray<T>(arr: T[]): T[] {
+  let reversed: T[] = [];
+
+  for (let i = arr.length - 1; i >= 0; i -= 1) {
+    reversed.push(arr[i]);
+  }
+
+  return reversed;
+}
