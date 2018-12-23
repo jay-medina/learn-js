@@ -1,4 +1,4 @@
-import { flatten, loop, every, everyBySome, some } from './problems';
+import { flatten, loop, every, everyBySome, some, dominantDirection } from './problems';
 
 describe('flatten', () => {
   it('flattens a nested array', () => {
@@ -65,5 +65,14 @@ describe('everySome', () => {
 
   it('checks all nums < 10', () => {
     expect(everyBySome([], predicate)).toBeTruthy();
+  });
+});
+
+describe('dominantDirection', () => {
+  it('ltr', () => {
+    expect(dominantDirection('Hello!')).toBe('ltr');
+  });
+  it('rtl', () => {
+    expect(dominantDirection('Hey, مساء الخير')).toBe('rtl');
   });
 });

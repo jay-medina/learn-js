@@ -1,3 +1,5 @@
+import SCRIPTS from './scripts';
+
 export function flatten<T>(arr: T[][]): T[] {
   return arr.reduce((total, next) => {
     return total.concat(next);
@@ -34,3 +36,48 @@ export const some = <T>(arr: T[], predicate: (step: T) => boolean): boolean => {
 
   return false;
 };
+
+type Direction = 'ltr' | 'rtl' | 'ttb';
+
+export function dominantDirection(text: string): Direction {
+  let s = countBy(text.split(''), (ch) => {
+    let script = characterScript(ch.codePointAt(0));
+    return script ? script.direction : 'none';
+  }).filter(({ name }) => name !== 'none');
+
+  return s.reduce((highest, next) => {
+    if (highest.count < next.count) return next;
+
+    return highest;
+  }).name as Direction;
+}
+
+function countBy<T, T2>(items: T[], groupBy: (item: T) => T2) {
+  let counts = [];
+
+  for (let item of items) {
+    let name = groupBy(item);
+    let known = counts.findIndex((c) => c.name == name);
+    if (known == -1) {
+      counts.push({ name, count: 1 });
+    } else {
+      counts[known].count++;
+    }
+  }
+  return counts;
+}
+
+function characterScript(code: number | undefined) {
+  if (!code) return null;
+
+  for (let script of SCRIPTS) {
+    if (
+      script.ranges.some(([from, to]) => {
+        return code >= from && code < to;
+      })
+    ) {
+      return script;
+    }
+  }
+  return null;
+}
