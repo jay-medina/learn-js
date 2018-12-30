@@ -91,3 +91,12 @@ describe('Group', () => {
         });
     });
 });
+
+describe('borrowing a method', () => {
+    test('get this to work', () => {
+        const map = { one: true, two: true, hasOwnProperty: true };
+        const hasOwnProperty = Object.prototype.hasOwnProperty.bind(map);
+
+        expect(hasOwnProperty('one')).toBe(true);
+    });
+});
